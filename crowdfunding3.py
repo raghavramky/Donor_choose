@@ -1,8 +1,12 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
+from selenium.webdriver.chrome.options import Options
 
-driver = webdriver.Chrome()
+chromeoptions = Options()
+driver = webdriver.Chrome(executable_path="C:\\Users\\vivek4\\Downloads\\chromedriver\\chromedriver.exe", chrome_options=chromeoptions) 
+
+#driver = webdriver.Chrome()
 driver.get("https://aisel.aisnet.org/do/search")
 time.sleep(2)
 #x=driver.page_source
