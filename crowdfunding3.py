@@ -8,13 +8,21 @@ import datetime
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import socket
+from selenium.webdriver.chrome.options import Options
 
 file_path='/MachintoshHD/Users/shailysaigal/Downloads'
 #csv_file=open('links.csv','w')
 #writer_main = csv.writer(csv_file)
 #writer_main.writerow(['Project Links'])
 
-driver = webdriver.Chrome()
+chromeoptions = Options()
+if socket.gethostname()=='c063144':
+    driver = webdriver.Chrome(executable_path="C:\\Users\\vivek4\\Downloads\\chromedriver\\chromedriver.exe", chrome_options=chromeoptions)
+    file_path='C:\\Users\\vivek4\\Downloads\\'
+else:
+    driver = webdriver.Chrome()
+
 driver.get("https://aisel.aisnet.org/do/search")
 time.sleep(5)
 #x=driver.page_source
@@ -45,34 +53,17 @@ end_date=driver.find_element_by_name("end_date")
 end_date.click()
 
 end=time.time()
-#end_date.send_keys(datetime.strftime(currentdate, '%m/%d/%Y'))
-#end_date.send_keys(date.today().strftime("%m/%d/%Y"))
+
 end_date.send_keys(datetime.datetime.fromtimestamp(end).strftime('%m/%d/%Y '))
 time.sleep(random.randint(10, 15))
 
-#driver.find_element_by_xpath('//*[@type='radio']')
+
                              
 search_button = driver.find_element_by_id("do-search-advanced")
 search_button.send_keys(Keys.RETURN)
 
 time.sleep(random.randint(10, 15))
-'''result=driver.find_element_by_id("results-facets")
-facet_pub=result.find_element_by_class_name("facet")
-time.sleep(2)
-journal_class=facet_pub.find_element_by_class_name("facet-publication_type")
-journal=journal_class.find_element_by_link_text("Journal")
 
-time.sleep(5)
-journal.click()
-'''
-
-#result=driver.find_element_by_xpath("//a")
-#journal=driver.find_element_by_link_text("Journal")
-'''journal_class=driver.find_element_by_class_name("facet-publication_type")
-journal=journal_class.find_element_by_link_text("Journal")
-time.sleep(10)
-journal.click()
-'''
 
 url = driver.current_url
 actual_url=url+"publication_type%3AJournal#"
@@ -83,24 +74,27 @@ time.sleep(random.randint(15, 20))
 
 #hrefs=[]
 
-header_list=driver.find_element_by_xpath("//div[@id='results-list']")
-header_title=header_list.find_elements_by_xpath("//span[@class='title']")
-with open('links.csv','w') as f:
-    for header in header_title:
-        headers= header.find_element_by_tag_name('a')
-        x=headers.get_attribute('href')
-        #print(x)
-        f.write(x+" \n")
-        #hrefs.append(header)
-    f.close()
-    #print(hrefs)
-#nbutton=driver.find_element_by_id("next-page")
+nbutton1=driver.find_element_by_xpath("//a[@aria-label='dismiss cookie message']")
+nbutton1.click()
 
-#nbutton=driver.find_element_by_xpath("//a[@id='next-page']")
-time.sleep(10)
+while(True):
+    header_list=driver.find_element_by_xpath("//div[@id='results-list']")
+    header_title=header_list.find_elements_by_xpath("//span[@class='title']")
+    with open('links.csv','a') as f:
+        for header in header_title:
+           headers= header.find_element_by_tag_name('a')
+           x=headers.get_attribute('href')
+           #print(x)
+           f.write(x+" \n")
+           #hrefs.append(header)
+        f.close()
 
-wait = WebDriverWait(driver, 100)
-nbutton = wait.until(EC.element_to_be_clickable((By.ID, 'next-page')))
-nbutton.click()
+    time.sleep(10)
+    try:
+        nbutton=driver.find_element_by_xpath("//a[@id='next-page']")
+        nbutton.click()
+    except:
+        print("No more pages..")
+        break
 
-#driver.close()
+driver.close()
