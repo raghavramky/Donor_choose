@@ -31,7 +31,7 @@ time.sleep(random.randint(15, 20))
 
 start_date=driver.find_element_by_name("start_date")
 start_date.click()
-start_date.send_keys("01/01/1995")
+start_date.send_keys("01/01/1985")
 time.sleep(5)
 time.sleep(random.randint(15, 20))
 
