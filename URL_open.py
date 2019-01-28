@@ -62,3 +62,10 @@ for div in Soup.findAll('div', {'id':'recommended_citation','class': 'element'})
     a = div.findAll('p')[0]
     print (a.text.strip())
 
+    
+#In[29]
+
+
+for div in Soup.findAll('div', {'id':'doi','class': 'element'}):
+    a = div.findAll('p')[0]
+    print (a.text.strip())
