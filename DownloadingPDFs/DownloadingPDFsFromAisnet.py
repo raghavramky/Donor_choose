@@ -16,7 +16,8 @@ start = time.time()
 informs_links = []
 ais_links = []
 
-#To Read from our CSV File
+#To Read from our CSV File for AISNET
+#Link: https://drive.google.com/drive/u/1/folders/16c9uS0XyN4QjZv6ooH9Ohb3T6I6xdZGm
 with open('Book1.csv') as csv_file:
 	csv_reader= csv.reader(csv_file, delimiter=',')
 	line_count = 0
@@ -28,6 +29,8 @@ with open('Book1.csv') as csv_file:
 			informs_links.append(row[1])
 			line_count += 1
 
+# To read from our csv File for INFORMS
+#Link: https://drive.google.com/drive/u/1/folders/1nIU7WHw64TsSE_4B5-EYwLMDw7heNdr4
 #Loading Chrome Driver in Selenium
 driver = webdriver.Chrome()
 
