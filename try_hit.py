@@ -3,6 +3,9 @@ import re
 
 keys=["title","author","author2","paper","year","date","URL","abstract"]
 values=[]
+fp_m=open('search.txt')
+lines_m=fp_m.readlines()
+
 with open ('search.txt', 'rt') as in_file: 
     for line in in_file: 
         x=re.findall("^%[A-Z]",line)
